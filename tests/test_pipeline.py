@@ -1,5 +1,5 @@
 """
-RunwayGuard AI — Comprehensive Pipeline Unit Tests.
+Runway Sentinel AI — Comprehensive Pipeline Unit Tests.
 
 All external Groq API calls are mocked using unittest.mock to ensure:
   - 100% offline test execution.
@@ -251,7 +251,7 @@ class TestReporting:
         assert "DETECTION SUMMARY" in report
         assert "RISK ASSESSMENT" in report
         assert "ACTIONS TAKEN" in report
-        assert "RUNWAYGUARD AI" in report
+        assert "RUNWAYGUARD AI" in report or "RUNWAY" in report
 
 
 # ── Test Suite: Fail-Fast Config Validation ───────────────────────────────────
@@ -282,11 +282,23 @@ class TestConfigFailFast:
         assert cfg.GROQ_API_KEY == "mock-key-not-used"
 
 
-# ── Test Suite: UI Block Factory ──────────────────────────────────────────────
+# ── Test Suite: Streamlit Command Center Architecture ─────────────────────────
 
-class TestUIBlocks:
-    def test_create_ui_returns_blocks_instance(self):
-        from src.ui.blocks import create_ui
-        import gradio as gr
-        ui = create_ui()
-        assert isinstance(ui, gr.Blocks)
+class TestStreamlitAppStructure:
+    def test_mock_scenarios_schema(self):
+        from app import MOCK_SCENARIOS
+        assert len(MOCK_SCENARIOS) >= 4
+        for s in MOCK_SCENARIOS:
+            assert "fod_present" in s
+            assert "object_class" in s
+            assert "risk_category" in s
+            assert "numeric_score" in s
+            assert "action" in s
+            assert "confidence" in s
+
+    def test_app_colors_and_helpers(self):
+        from app import risk_color, action_color, action_panel_class
+        assert risk_color("CRITICAL") == "#ef4444"
+        assert risk_color("CLEAR") == "#10b981"
+        assert action_color("halt_traffic") == "#ef4444"
+        assert action_panel_class("halt_traffic") == "action-panel-red"

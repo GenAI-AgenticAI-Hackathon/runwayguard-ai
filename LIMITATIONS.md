@@ -1,13 +1,13 @@
-# ⚠️ RunwayGuard AI — Engineering Disclosures & Limitations
+# ⚠️ Runway Sentinel AI — Engineering Disclosures & Limitations
 
-RunwayGuard AI commits to technical honesty. In accordance with professional engineering ethics, this document explicitly details the boundary between operational code and simulated capabilities.
+Runway Sentinel AI commits to technical honesty. In accordance with professional engineering ethics, this document explicitly details the boundary between operational code and simulated capabilities.
 
 ---
 
 ## 1. Frame-by-Frame Processing vs. Real-Time Video Tracking
 
 * **Deck Claim:** "Continuous real-time multi-camera runway video tracking."
-* **Reality in Code:** The system implements sequential frame ingestion via Groq Vision. Each frame is processed as an individual multimodal completion.
+* **Reality in Code:** The system implements sequential frame ingestion via Groq Vision (Llama-4 Scout). Each frame is processed as an individual multimodal completion.
 * **Why:** Hosted vision LLMs introduce a 1.0–2.5 second network and inference latency per frame. Real-time 30 FPS video tracking requires local edge deployment (e.g., TensorRT-optimized YOLOv8 or ByteTrack) rather than remote cloud API calls.
 * **Current Honest Implementation:**
   * Single-image diagnostic analysis via manual upload, webcam snapshot, or scenario injection.
@@ -25,7 +25,7 @@ RunwayGuard AI commits to technical honesty. In accordance with professional eng
 
 ## 3. Session-Based In-Memory Audit Persistence
 
-* **Current Implementation:** The audit trail is stored in an in-memory session log and rendered to the Gradio UI and incident reports.
+* **Current Implementation:** The audit trail is stored in an in-memory session log and rendered to the Streamlit UI and incident reports.
 * **Limitation:** Audit records are not persisted to a PostgreSQL/TimescaleDB time-series database across server restarts. In a certified aviation deployment, every audit entry would be cryptographically hashed and written to a write-once tamper-evident datastore.
 
 ---
@@ -37,4 +37,4 @@ RunwayGuard AI commits to technical honesty. In accordance with professional eng
 
 ---
 
-*Authored by the RunwayGuard AI Engineering Team.*
+*Authored by the Runway Sentinel AI Engineering Team.*
