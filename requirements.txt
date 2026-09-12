@@ -1,18 +1,14 @@
-# RunwayGuard AI — Production Dependencies
-# Pinned for reproducibility and container / Hugging Face Spaces compatibility
+# ── Core UI ──────────────────────────────────────────────────────────────────
+streamlit>=1.35.0,<2.0.0
+pandas>=2.0.0,<3.0.0
 
-# Core AI & LLM SDK
+# ── AI / Vision ───────────────────────────────────────────────────────────────
 groq>=0.9.0,<1.0.0
-
-# Computer Vision (headless prevents missing libGL.so.1 errors on Debian/Docker/Spaces)
 opencv-python-headless>=4.8.0.76,<5.0.0.0
 
-# User Interface
-gradio>=4.0.0,<5.0.0
-
-# Environment Management
+# ── Utilities ─────────────────────────────────────────────────────────────────
 python-dotenv>=1.0.0,<2.0.0
 
-# Testing & Quality Assurance
+# ── Testing ───────────────────────────────────────────────────────────────────
 pytest>=7.4.0,<9.0.0
 pytest-mock>=3.12.0,<4.0.0
