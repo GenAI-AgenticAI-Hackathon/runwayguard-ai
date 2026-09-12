@@ -124,7 +124,7 @@ runwayguard/
 ### 1. Clone the Repository & Set Up Environment
 
 ```bash
-git clone https://github.com/your-username/runwayguard-ai.git
+git clone https://github.com/GenAI-AgenticAI-Hackathon/runwayguard-ai.git
 cd runwayguard-ai
 
 # Create and activate virtual environment
