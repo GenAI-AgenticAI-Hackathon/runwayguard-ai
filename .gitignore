@@ -1,0 +1,42 @@
+# Secrets & Local Environment
+.env
+.env.local
+*.pem
+*.key
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Dev / Experimentation Notebooks (Do NOT deploy to Hugging Face Spaces)
+notebooks/
+checkpoints/
+*.ipynb
+*.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Testing & Coverage Artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Build & Packaging
+build/
+dist/
+*.egg-info/
+
+# IDE & Editor Cache
+.vscode/
+.idea/
+*.swp
+*.swo
