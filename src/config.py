@@ -95,18 +95,15 @@ if USE_MOCK:
 else:
     GROQ_API_KEY = _get_api_key()
     if not GROQ_API_KEY:
-        USE_MOCK = True
-        NO_API_KEY_SET = True
-        GROQ_API_KEY = "mock-key-not-used"
-        logger.warning(
-            "GROQ_API_KEY is not configured. Falling back to MOCK (Demo) mode "
-            "so app can boot cleanly without crashing."
+        raise ValueError(
+            "GROQ_API_KEY is required when RUNWAYGUARD_MOCK is not enabled. "
+            "Set GROQ_API_KEY in the environment or Streamlit Cloud secrets."
         )
-    else:
-        logger.info(
-            "Config loaded | Vision: %s | Agent: %s | Report: %s",
-            VISION_MODEL,
-            AGENT_MODEL,
-            REPORT_MODEL,
-        )
+
+    logger.info(
+        "Config loaded | Vision: %s | Agent: %s | Report: %s",
+        VISION_MODEL,
+        AGENT_MODEL,
+        REPORT_MODEL,
+    )
 
