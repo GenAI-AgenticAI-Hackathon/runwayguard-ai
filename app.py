@@ -670,6 +670,14 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+if getattr(config, "NO_API_KEY_SET", False):
+    st.info(
+        "ℹ️ **Running in Offline Demo Mode**: `GROQ_API_KEY` is not set in Streamlit Cloud Secrets. "
+        "The app is fully functional using pre-compiled synthetic FOD scenarios. "
+        "To enable live AI inference, add `GROQ_API_KEY = \"gsk_...\"` in your Streamlit Cloud App Settings → Secrets."
+    )
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # LAYOUT — THREE COLUMNS
 # ═══════════════════════════════════════════════════════════════════════════════

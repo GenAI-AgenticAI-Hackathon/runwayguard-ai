@@ -83,7 +83,9 @@ def _get_api_key() -> str:
     return key
 
 
-# ── API Key — fail fast ────────────────────────────────────────────────────────
+# ── API Key — Fail-safe resolution ────────────────────────────────────────────
+NO_API_KEY_SET: bool = False
+
 if USE_MOCK:
     GROQ_API_KEY: str = "mock-key-not-used"
     logger.warning(
@@ -93,18 +95,18 @@ if USE_MOCK:
 else:
     GROQ_API_KEY = _get_api_key()
     if not GROQ_API_KEY:
-        raise ValueError(
-            "\n"
-            "╔══════════════════════════════════════════════════════════════╗\n"
-            "║  CRITICAL: GROQ_API_KEY is not set!                         ║\n"
-            "║  Option 1: Create a .env file with GROQ_API_KEY=gsk_...     ║\n"
-            "║  Option 2: Add it to Streamlit Cloud Secrets Manager.        ║\n"
-            "║  Option 3: Set RUNWAYGUARD_MOCK=true for offline demo mode.  ║\n"
-            "╚══════════════════════════════════════════════════════════════╝\n"
+        USE_MOCK = True
+        NO_API_KEY_SET = True
+        GROQ_API_KEY = "mock-key-not-used"
+        logger.warning(
+            "GROQ_API_KEY is not configured. Falling back to MOCK (Demo) mode "
+            "so app can boot cleanly without crashing."
         )
-    logger.info(
-        "Config loaded | Vision: %s | Agent: %s | Report: %s",
-        VISION_MODEL,
-        AGENT_MODEL,
-        REPORT_MODEL,
-    )
+    else:
+        logger.info(
+            "Config loaded | Vision: %s | Agent: %s | Report: %s",
+            VISION_MODEL,
+            AGENT_MODEL,
+            REPORT_MODEL,
+        )
+
