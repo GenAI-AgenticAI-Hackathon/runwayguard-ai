@@ -11,12 +11,44 @@ Dual key-resolution strategy:
 """
 import os
 import logging
+from pathlib import Path
+
+try:
+    from dotenv import load_dotenv
+except Exception:  # pragma: no cover - optional dependency guard
+    load_dotenv = None
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
 logger = logging.getLogger("runwaysentinel.config")
+
+
+def _load_local_env_file() -> None:
+    """Load .env from the active working directory, preserving existing env vars."""
+    env_file = Path.cwd() / ".env"
+    if not env_file.exists():
+        return
+
+    if load_dotenv is not None:
+        load_dotenv(env_file, override=False)
+        return
+
+    for raw_line in env_file.read_text(encoding="utf-8").splitlines():
+        stripped = raw_line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        key = key.strip()
+        value = value.strip()
+        if value and value[0] == value[-1] and value[0] in {"'", '"'}:
+            value = value[1:-1]
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+_load_local_env_file()
 
 # ── Demo / CI override ─────────────────────────────────────────────────────────
 # Set RUNWAYGUARD_MOCK=true to run the full UI with synthetic data.

@@ -257,9 +257,10 @@ class TestReporting:
 # ── Test Suite: Fail-Fast Config Validation ───────────────────────────────────
 
 class TestConfigFailFast:
-    def test_config_raises_when_api_key_missing_and_not_mock(self, monkeypatch):
+    def test_config_raises_when_api_key_missing_and_not_mock(self, monkeypatch, tmp_path):
         monkeypatch.delenv("GROQ_API_KEY", raising=False)
         monkeypatch.setenv("RUNWAYGUARD_MOCK", "false")
+        monkeypatch.chdir(tmp_path)
 
         # Evict src.config from sys.modules to force module re-execution
         for mod in list(sys.modules.keys()):
@@ -268,6 +269,19 @@ class TestConfigFailFast:
 
         with pytest.raises(ValueError, match="GROQ_API_KEY"):
             import src.config  # noqa: F401
+
+    def test_config_loads_dotenv_file_when_present(self, monkeypatch, tmp_path):
+        monkeypatch.delenv("GROQ_API_KEY", raising=False)
+        monkeypatch.setenv("RUNWAYGUARD_MOCK", "false")
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / ".env").write_text("GROQ_API_KEY=dotenv-loaded-key\n", encoding="utf-8")
+
+        for mod in list(sys.modules.keys()):
+            if "src.config" in mod:
+                del sys.modules[mod]
+
+        import src.config as cfg
+        assert cfg.GROQ_API_KEY == "dotenv-loaded-key"
 
     def test_config_succeeds_in_mock_mode_without_key(self, monkeypatch):
         monkeypatch.delenv("GROQ_API_KEY", raising=False)

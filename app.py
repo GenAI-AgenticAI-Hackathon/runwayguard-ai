@@ -111,158 +111,268 @@ if "sample_loaded" not in st.session_state:
 
 DARK_CSS = """
 <style>
-/* ── Base ─────────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+/* ── Google Font ──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
+/* ── Base Reset ───────────────────────────────────────────────────────────── */
 html, body, [data-testid="stAppViewContainer"] {
-    background: #0a0f1e !important;
-    color: #e2e8f0 !important;
+    background: #060b18 !important;
+    color: #e8edf5 !important;
     font-family: 'Inter', system-ui, sans-serif !important;
 }
-[data-testid="stHeader"]        { background: transparent !important; }
-[data-testid="stSidebar"]       { background: #0f172a !important; }
-.main .block-container          { padding: 0.5rem 1rem !important; max-width: 100% !important; }
-footer, #MainMenu               { visibility: hidden !important; }
+[data-testid="stHeader"]   { background: transparent !important; }
+[data-testid="stSidebar"]  { background: #0a1020 !important; }
+.main .block-container     { padding: 0.5rem 1.2rem !important; max-width: 100% !important; }
+footer, #MainMenu          { visibility: hidden !important; }
 
-/* ── Typography overrides ─────────────────────────────────────────────────── */
-.stMarkdown, .stText, p, h1, h2, h3, h4, label, span {
-    color: #e2e8f0 !important;
+/* ── Global Typography ─────────────────────────────────────────────────────── */
+.stMarkdown p, .stText, p  { color: #c8d4e8 !important; font-size: 0.85rem; }
+h1, h2, h3, h4             { color: #f0f4fc !important; }
+label                      { color: #9db0cc !important; }
+
+/* ── Streamlit Warning / Info / Error boxes ─────────────────────────────── */
+[data-testid="stAlert"]  { border-radius: 8px !important; }
+
+/* ── Tabs ──────────────────────────────────────────────────────────────────── */
+.stTabs [data-baseweb="tab-list"]  {
+    background: #0e1828;
+    border-radius: 8px;
+    padding: 3px;
+    border: 1px solid #1c2e48;
 }
+.stTabs [data-baseweb="tab"] {
+    border-radius: 6px;
+    color: #7a93b5 !important;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+.stTabs [aria-selected="true"] {
+    background: #1a2d4a !important;
+    color: #dde8f5 !important;
+}
+.stTabs [data-baseweb="tab-panel"] { padding: 8px 0 0 0 !important; }
 
-/* ── Tabs ─────────────────────────────────────────────────────────────────── */
-.stTabs [data-baseweb="tab-list"]       { background: #111827; border-radius: 6px; padding: 2px; }
-.stTabs [data-baseweb="tab"]            { border-radius: 4px; color: #64748b !important; font-size: 0.75rem; font-weight: 600; }
-.stTabs [aria-selected="true"]          { background: #1e293b !important; color: #e2e8f0 !important; }
-.stTabs [data-baseweb="tab-panel"]      { padding: 6px 0 0 0 !important; }
-
-/* ── Metrics ──────────────────────────────────────────────────────────────── */
+/* ── Metrics ───────────────────────────────────────────────────────────────── */
 [data-testid="metric-container"] {
-    background: #111827 !important;
-    border: 1px solid #1e2d45 !important;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
+    background: #0e1828 !important;
+    border: 1px solid #1c2e48 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
 }
-[data-testid="metric-container"] label          { color: #64748b !important; font-size: 0.7rem !important; letter-spacing: 0.12em !important; }
-[data-testid="stMetricValue"]                   { color: #e2e8f0 !important; font-family: 'Courier New', monospace !important; }
+[data-testid="metric-container"] label {
+    color: #7a93b5 !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+}
+[data-testid="stMetricValue"] {
+    color: #f0f4fc !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.4rem !important;
+}
+[data-testid="stMetricDelta"] { font-size: 0.72rem !important; }
 
-/* ── Buttons ──────────────────────────────────────────────────────────────── */
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
 .stButton > button {
-    border-radius: 6px !important;
+    border-radius: 8px !important;
     font-weight: 700 !important;
     letter-spacing: 0.08em !important;
-    transition: all 0.15s ease !important;
+    font-size: 0.78rem !important;
+    transition: all 0.2s ease !important;
     border: none !important;
+    padding: 0.5rem 1rem !important;
 }
 .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
-    color: white !important;
-    box-shadow: 0 0 16px #ef444444 !important;
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px #ef444455, 0 4px 12px #0006 !important;
 }
 .stButton > button[kind="primary"]:hover {
-    box-shadow: 0 0 28px #ef4444aa !important;
+    box-shadow: 0 0 32px #ef4444aa, 0 4px 16px #0008 !important;
     transform: translateY(-1px) !important;
 }
 .stButton > button[kind="secondary"] {
-    background: #1e293b !important;
-    color: #94a3b8 !important;
-    border: 1px solid #334155 !important;
+    background: #122038 !important;
+    color: #9db0cc !important;
+    border: 1px solid #1c2e48 !important;
+}
+.stButton > button[kind="secondary"]:hover {
+    background: #1a2d4a !important;
+    color: #c8d4e8 !important;
+    border-color: #2a4468 !important;
 }
 
-/* ── Inputs & Uploaders ───────────────────────────────────────────────────── */
+/* ── File Uploader ─────────────────────────────────────────────────────────── */
 [data-testid="stFileUploaderDropzone"] {
-    background: #111827 !important;
-    border: 1px dashed #1e2d45 !important;
-    border-radius: 8px !important;
+    background: #0e1828 !important;
+    border: 2px dashed #2a4060 !important;
+    border-radius: 10px !important;
+    transition: border-color 0.2s !important;
 }
-[data-testid="stCameraInput"] { border-radius: 8px !important; }
+[data-testid="stFileUploaderDropzone"]:hover {
+    border-color: #3d6b9e !important;
+}
+[data-testid="stFileUploaderDropzone"] p,
+[data-testid="stFileUploaderDropzone"] span,
+[data-testid="stFileUploaderDropzone"] small {
+    color: #7a93b5 !important;
+}
+[data-testid="stCameraInput"] { border-radius: 10px !important; }
 
-/* ── Dataframe ────────────────────────────────────────────────────────────── */
-[data-testid="stDataFrame"]             { background: #111827 !important; border-radius: 8px; }
-.dvn-scroller                           { background: #111827 !important; }
+/* ── Dataframe ─────────────────────────────────────────────────────────────── */
+[data-testid="stDataFrame"]  { background: #0e1828 !important; border-radius: 10px; }
+.dvn-scroller               { background: #0e1828 !important; }
 
-/* ── Alerts ───────────────────────────────────────────────────────────────── */
-[data-baseweb="notification"]           { background: #1e293b !important; border-radius: 8px !important; }
+/* ── Alerts ────────────────────────────────────────────────────────────────── */
+[data-baseweb="notification"] { background: #0e1828 !important; border-radius: 8px !important; }
 
-/* ── Divider ──────────────────────────────────────────────────────────────── */
-hr                                      { border-color: #1e2d45 !important; margin: 8px 0 !important; }
+/* ── Divider ───────────────────────────────────────────────────────────────── */
+hr { border-color: #1c2e48 !important; margin: 10px 0 !important; }
 
 /* ─────────────────────────────────────────────────────────────────────────── */
-/* COMPONENT STYLES                                                            */
+/* COMPONENT STYLES                                                             */
 /* ─────────────────────────────────────────────────────────────────────────── */
 
-/* Panel card */
+/* ── Panel card ────────────────────────────────────────────────────────────── */
 .rs-panel {
-    background: #111827;
-    border: 1px solid #1e2d45;
-    border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 8px;
+    background: #0e1828;
+    border: 1px solid #1c2e48;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 10px;
 }
 .rs-panel-title {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: #475569;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: #7a93b5;
     text-transform: uppercase;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #1e2d45;
-    padding-bottom: 6px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #1c2e48;
+    padding-bottom: 8px;
 }
-.rs-kv            { display: flex; align-items: center; padding: 5px 0; border-bottom: 1px solid #0f172a; }
+.rs-kv            { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid #0a1020; }
 .rs-kv:last-child { border-bottom: none; }
-.rs-kv-label      { font-size: 0.6rem; color: #475569; letter-spacing: 0.1em; text-transform: uppercase; min-width: 120px; }
-.rs-kv-value      { font-size: 0.82rem; color: #e2e8f0; font-family: 'Courier New', monospace; }
+.rs-kv-label      { font-size: 0.62rem; color: #6382a0; letter-spacing: 0.1em; text-transform: uppercase; min-width: 130px; font-weight: 600; }
+.rs-kv-value      { font-size: 0.84rem; color: #dde8f5; font-family: 'JetBrains Mono', 'Courier New', monospace; font-weight: 500; }
 
-/* Confidence bar */
-.conf-bar-bg      { background: #0f172a; border-radius: 3px; height: 4px; margin-top: 8px; overflow: hidden; }
+/* ── Confidence bar ────────────────────────────────────────────────────────── */
+.conf-bar-bg { background: #0a1020; border-radius: 4px; height: 5px; margin-top: 10px; overflow: hidden; }
 
-/* Glowing action panels */
+/* ── Glow animations ───────────────────────────────────────────────────────── */
 @keyframes glow-red {
-    0%,100% { box-shadow: 0 0 8px #ef444455, 0 0 24px #ef444422; }
-    50%      { box-shadow: 0 0 24px #ef4444bb, 0 0 52px #ef444455; }
+    0%,100% { box-shadow: 0 0 10px #ef444455, 0 0 28px #ef444422; }
+    50%      { box-shadow: 0 0 28px #ef4444cc, 0 0 60px #ef444466; }
 }
 @keyframes glow-amber {
-    0%,100% { box-shadow: 0 0 8px #f59e0b44, 0 0 20px #f59e0b22; }
-    50%      { box-shadow: 0 0 22px #f59e0bbb, 0 0 44px #f59e0b44; }
+    0%,100% { box-shadow: 0 0 10px #f59e0b44, 0 0 24px #f59e0b22; }
+    50%      { box-shadow: 0 0 26px #f59e0bcc, 0 0 52px #f59e0b55; }
 }
 @keyframes pulse-dot {
     0%,100% { opacity: 1; }
     50%      { opacity: 0.15; }
 }
 
-.action-panel-red   { background:#0a0e1a; border:1px solid #ef4444; border-radius:8px; padding:14px; animation: glow-red 2.5s ease-in-out infinite; }
-.action-panel-amber { background:#0a0e1a; border:1px solid #f59e0b; border-radius:8px; padding:14px; animation: glow-amber 2.5s ease-in-out infinite; }
-.action-panel-green { background:#0a0e1a; border:1px solid #10b981; border-radius:8px; padding:14px; }
-.action-panel-idle  { background:#0a0e1a; border:1px solid #1e2d45; border-radius:8px; padding:14px; }
+/* ── Action panels ─────────────────────────────────────────────────────────── */
+.action-panel-red   { background:#080e1c; border:1px solid #ef4444; border-radius:10px; padding:16px; animation: glow-red 2.5s ease-in-out infinite; }
+.action-panel-amber { background:#080e1c; border:1px solid #f59e0b; border-radius:10px; padding:16px; animation: glow-amber 2.5s ease-in-out infinite; }
+.action-panel-green { background:#080e1c; border:1px solid #10b981; border-radius:10px; padding:16px; }
+.action-panel-idle  { background:#080e1c; border:1px solid #1c2e48; border-radius:10px; padding:16px; }
 
-.action-title { font-size:0.65rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
-.terminal-body {
-    background: #050a14;
-    border-radius: 6px;
-    padding: 12px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.78rem;
-    color: #cbd5e1;
-    line-height: 1.65;
+.action-title {
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
 }
-.term-cmd   { font-weight: 700; font-size: 0.9rem; }
-.term-label { color: #475569; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px; }
+.terminal-body {
+    background: #040810;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: #c8d4e8;
+    line-height: 1.7;
+    border: 1px solid #0f1e32;
+}
+.term-cmd   { font-weight: 700; font-size: 0.92rem; }
+.term-label { color: #6382a0; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 10px; display: block; }
 
-/* Report panel */
-.report-section-title { font-size:0.65rem; font-weight:700; letter-spacing:0.12em; color:#22d3ee; text-transform:uppercase; margin:8px 0 4px 0; }
-.report-footer        { font-size:0.6rem; color:#475569; border-top:1px solid #1e2d45; margin-top:10px; padding-top:7px; text-align:center; font-family:'Courier New',monospace; }
-.mono                 { font-family:'Courier New',monospace !important; }
+/* ── Report panel ──────────────────────────────────────────────────────────── */
+.report-section-title {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #22d3ee;
+    text-transform: uppercase;
+    margin: 10px 0 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.report-footer {
+    font-size: 0.6rem;
+    color: #6382a0;
+    border-top: 1px solid #1c2e48;
+    margin-top: 12px;
+    padding-top: 8px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+}
+.mono { font-family: 'JetBrains Mono', 'Courier New', monospace !important; }
 
-/* Scenario badge grid */
-.scenario-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:5px; margin:6px 0 10px 0; }
-.scenario-tile { border-radius:5px; padding:6px 4px; text-align:center; }
+/* ── Scenario badge grid ───────────────────────────────────────────────────── */
+.scenario-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; margin: 8px 0 12px 0; }
+.scenario-tile { border-radius: 8px; padding: 8px 4px; text-align: center; cursor: pointer; transition: transform 0.15s; }
+.scenario-tile:hover { transform: scale(1.04); }
 
-/* System info box */
-.sysinfo { margin-top:8px; padding:10px; background:#050a14; border:1px solid #1e2d45; border-radius:6px; }
-.sysinfo-row { font-size:0.6rem; color:#475569; font-family:'Courier New',monospace; line-height:1.9; }
+/* ── System info box ───────────────────────────────────────────────────────── */
+.sysinfo {
+    margin-top: 10px;
+    padding: 12px;
+    background: #040810;
+    border: 1px solid #1c2e48;
+    border-radius: 8px;
+}
+.sysinfo-row {
+    font-size: 0.62rem;
+    color: #7a93b5;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 2.0;
+}
+.sysinfo-key   { color: #4a6480; }
+.sysinfo-value { color: #9db8d8; }
 
-/* Section labels */
-.section-label { font-size:0.6rem; letter-spacing:0.16em; color:#475569; text-transform:uppercase; font-weight:700; margin-bottom:5px; display:block; }
+/* ── Section labels ────────────────────────────────────────────────────────── */
+.section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: #7a93b5;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ── Standby / empty states ────────────────────────────────────────────────── */
+.standby-text {
+    color: #3d5570 !important;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+}
+
+/* ── Upload box text ───────────────────────────────────────────────────────── */
+.upload-hint {
+    color: #5a7898;
+    font-size: 0.72rem;
+    text-align: center;
+    padding: 8px 0 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.06em;
+}
 </style>
 """
 
@@ -315,6 +425,7 @@ def run_live_pipeline(image_path: str) -> dict:
     report    = generate_report(detection, risk, audit)
 
     primary = (audit["actions_executed"] or [{"tool": "log_only", "args": {}, "result": {"detail": "No action."}}])[0]
+    feats = detection.get("features", {})
     return {
         "fod_present":      detection["fod_present"],
         "object_class":     detection["object_class"],
@@ -323,6 +434,10 @@ def run_live_pipeline(image_path: str) -> dict:
         "numeric_score":    risk["numeric_score"],
         "location_estimate":detection["location_estimate"],
         "confidence":       detection["confidence"],
+        "reasoning":        detection.get("reasoning", ""),
+        "edge_density":     feats.get("edge_density", 0),
+        "non_asphalt_pct":  feats.get("non_asphalt_pct", 0),
+        "metallic_pct":     feats.get("metallic_pct", 0),
         "action":           primary["tool"],
         "action_reason":    primary.get("args", {}).get("reason", "Autonomous assessment threshold reached."),
         "action_detail":    primary["result"].get("detail", "Action executed."),
@@ -348,9 +463,29 @@ def render_detection_panel(result: dict) -> None:
         f'background:{rc};border-radius:3px;transition:width .7s;"></div></div>'
     )
 
+    reasoning   = result.get("reasoning", "")
+    edge_d      = result.get("edge_density", 0)
+    non_asph    = result.get("non_asphalt_pct", 0)
+    metallic    = result.get("metallic_pct", 0)
+
+    reasoning_row = (
+        f'<div class="rs-kv" style="align-items:flex-start;">'
+        f'<span class="rs-kv-label" style="padding-top:2px;">AI Reasoning</span>'
+        f'<span class="rs-kv-value" style="font-size:.74rem;color:#a0b8d0;font-family:Inter,sans-serif;white-space:normal;line-height:1.5;">'
+        f'{reasoning}</span></div>'
+    ) if reasoning else ""
+
+    cv_row = (
+        f'<div class="rs-kv">'
+        f'<span class="rs-kv-label">CV Metrics</span>'
+        f'<span class="rs-kv-value" style="font-size:.7rem;color:#7a93b5;">'
+        f'edges:{edge_d:.0f} &nbsp;|&nbsp; non-asphalt:{non_asph:.0f}% &nbsp;|&nbsp; metallic:{metallic:.0f}%'
+        f'</span></div>'
+    ) if edge_d else ""
+
     st.markdown(f"""
 <div class="rs-panel">
-  <div class="rs-panel-title">⬡ Vision Detection Output</div>
+  <div class="rs-panel-title">⬡ Computer Vision + AI Detection</div>
   <div class="rs-kv" style="padding:5px 0;">{fod_badge}</div>
   <div class="rs-kv">
     <span class="rs-kv-label">Object Class</span>
@@ -360,7 +495,7 @@ def render_detection_panel(result: dict) -> None:
     <span class="rs-kv-label">Risk Category</span>
     <span class="rs-kv-value" style="color:{rc};font-weight:700;font-size:1rem;">
       {result["risk_category"]}
-      <span style="color:{rc}88;font-size:.7rem;"> ({result["numeric_score"]}/10)</span>
+      <span style="color:{rc}88;font-size:.72rem;"> ({result["numeric_score"]}/10)</span>
     </span>
   </div>
   <div class="rs-kv">
@@ -371,6 +506,8 @@ def render_detection_panel(result: dict) -> None:
     <span class="rs-kv-label">Confidence</span>
     <span class="rs-kv-value">{conf_pct}%</span>
   </div>
+  {cv_row}
+  {reasoning_row}
   {conf_bar}
   <div class="rs-kv" style="margin-top:6px;">
     <span class="rs-kv-label">Scan Timestamp</span>
@@ -383,9 +520,10 @@ def render_action_panel(result: dict | None) -> None:
     if result is None:
         st.markdown("""
 <div class="action-panel-idle">
-  <div class="action-title" style="color:#1e2d45;">⚡ Agentic Decision Engine</div>
+  <div class="action-title" style="color:#3d5570;">⚡ Agentic Decision Engine</div>
   <div class="terminal-body">
-    <span style="color:#1e2d45;">$ AWAITING DETECTION RESULT...</span>
+    <span style="color:#3d5570;">$ AWAITING DETECTION RESULT...</span><br>
+    <span style="color:#283d52;font-size:.7rem;">Agent will execute actions after scan completes.</span>
   </div>
 </div>""", unsafe_allow_html=True)
         return
@@ -418,10 +556,8 @@ def render_report_panel(result: dict | None) -> None:
     if result is None:
         st.markdown("""
 <div class="rs-panel" style="text-align:center;padding:28px 14px;">
-  <div style="color:#1e2d45;font-size:.77rem;font-family:'Courier New',monospace;">
-    NO INCIDENT DATA<br>
-    <span style="font-size:.7rem;">Run a scan to generate a report</span>
-  </div>
+  <div class="standby-text">NO INCIDENT DATA</div>
+  <div style="color:#3d5570;font-size:.68rem;margin-top:6px;font-family:'JetBrains Mono',monospace;">Run a scan to generate an incident report</div>
 </div>""", unsafe_allow_html=True)
         return
 
@@ -549,11 +685,14 @@ with col_input:
     tab_upload, tab_cam = st.tabs(["📁  Upload Image", "📷  Live Camera"])
 
     with tab_upload:
+        st.markdown('<div class="upload-hint">📂 Drop a runway image or click Browse</div>', unsafe_allow_html=True)
         uploaded_file = st.file_uploader(
             "Runway image",
             type=["jpg", "jpeg", "png", "bmp", "webp"],
             label_visibility="collapsed",
         )
+        if uploaded_file is not None:
+            st.image(uploaded_file, caption=f"✅ Loaded: {uploaded_file.name}", use_container_width=True)
 
     with tab_cam:
         camera_img = st.camera_input("Capture from webcam", label_visibility="collapsed")
@@ -637,15 +776,19 @@ with col_analysis:
                         result = run_mock_pipeline(MOCK_SCENARIOS[idx])
                     else:
                         # Live mode: write upload to temp file for detection
-                        image_source = uploaded_file or camera_img
-                        suffix = "." + (getattr(image_source, "name", "tmp.jpg").split(".")[-1])
-                        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                        image_source = uploaded_file if uploaded_file is not None else camera_img
+                        fname = getattr(image_source, "name", "tmp.jpg")
+                        ext = "." + fname.rsplit(".", 1)[-1].lower() if "." in fname else ".jpg"
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
                             tmp.write(image_source.getvalue())
                             tmp_path = tmp.name
                         try:
                             result = run_live_pipeline(tmp_path)
                         finally:
-                            os.unlink(tmp_path)
+                            try:
+                                os.unlink(tmp_path)
+                            except OSError:
+                                pass
 
                     ts = now_ts()
                     st.session_state.last_result   = result
@@ -658,7 +801,10 @@ with col_analysis:
                         "Location":        result["location_estimate"],
                     })
                 except Exception as exc:
-                    st.error(f"Pipeline error: {exc}")
+                    import traceback
+                    st.error(f"🚨 Pipeline error: {exc}")
+                    with st.expander("🔍 Full error trace (click to expand)"):
+                        st.code(traceback.format_exc(), language="python")
                     st.session_state.system_status = "IDLE"
 
             st.rerun()
@@ -669,10 +815,11 @@ with col_analysis:
     else:
         st.markdown("""
 <div class="rs-panel" style="text-align:center;padding:40px 14px;">
-  <div style="font-size:2.5rem;opacity:.12;">📡</div>
-  <div style="color:#1e2d45;font-size:.77rem;margin-top:10px;font-family:'Courier New',monospace;letter-spacing:.1em;">
+  <div style="font-size:2.5rem;opacity:.3;">📡</div>
+  <div class="standby-text" style="margin-top:12px;">
     AWAITING INPUT — SYSTEM STANDBY
   </div>
+  <div style="color:#3d5570;font-size:.68rem;margin-top:6px;font-family:'JetBrains Mono',monospace;">Upload an image and click INITIATE SCAN</div>
 </div>""", unsafe_allow_html=True)
 
     # ── Agentic layer panel ────────────────────────────────────────────────────
@@ -722,7 +869,6 @@ with col_report:
             st.rerun()
     else:
         st.markdown("""
-<div class="rs-panel" style="text-align:center;padding:16px;color:#1e2d45;
-     font-size:.77rem;font-family:'Courier New',monospace;letter-spacing:.1em;">
-  NO HISTORY — RUN FIRST SCAN
+<div class="rs-panel" style="text-align:center;padding:16px;">
+  <div class="standby-text">NO HISTORY — RUN FIRST SCAN</div>
 </div>""", unsafe_allow_html=True)
