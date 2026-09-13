@@ -69,7 +69,11 @@ def generate_report(detection: Dict[str, Any], risk_score: Dict[str, Any], audit
         "─── 2. DETERMINISTIC RISK EVALUATION ──────────────────────────\n"
         f"  Calculated Score    : {risk_score.get('numeric_score')} / 10.0\n"
         f"  Risk Classification : {risk_score.get('risk_category')}\n"
-        f"  Mathematical Model  : {risk_score.get('breakdown', {}).get('formula', 'N/A')}\n\n"
+        f"  Mathematical Model  : {risk_score.get('breakdown', {}).get('formula', 'N/A')}\n"
+        f"  Raw Vision Component: {risk_score.get('breakdown', {}).get('raw_component', 'N/A')}\n"
+        f"  Object Weight       : {risk_score.get('breakdown', {}).get('object_weight', 'N/A')}\n"
+        f"  Location Weight     : {risk_score.get('breakdown', {}).get('location_weight', 'N/A')}\n"
+        f"  Confidence Factor   : {risk_score.get('breakdown', {}).get('confidence', 'N/A')}\n\n"
         "─── 3. AGENTIC ACTIONS EXECUTED ───────────────────────────────\n"
         f"{actions_summary}\n"
         "════════════════════════════════════════════════════════════════\n"
@@ -98,8 +102,23 @@ def generate_report(detection: Dict[str, Any], risk_score: Dict[str, Any], audit
             {
                 "role": "system",
                 "content": (
-                    "You are an aviation safety incident reporting specialist. "
-                    "You transcribe verified technical logs into clean, formal reports with zero hallucination."
+                    "You are the RunwayGuard Aviation Safety Incident Reporting Specialist. "
+                    "Your role is to synthesize raw detection telemetry, deterministic risk evaluations, "
+                    "and executed agent tool-calls into formal, ICAO/FAA-compliant incident reports.\n\n"
+                    "CONSTRAINTS:\n"
+                    "1. ZERO HALLUCINATION: You must only include data explicitly provided in the input logs. "
+                    "If a detail (like weather or flight numbers) is missing, explicitly state \"Data Unavailable\". Do not invent scenarios.\n"
+                    "2. MATHEMATICAL RISK GROUNDING: You must calculate and verify the final risk score using the exact mathematical formula provided in your system context. "
+                    "The formula is: Numeric Score = Raw Vision Component * Object Weight * Location Weight * Confidence * (10/3). "
+                    "You must show the step-by-step mathematical execution using the explicitly provided variables in your report.\n"
+                    "3. TONE: Objective, clinical, and strictly professional.\n\n"
+                    "REQUIRED REPORT STRUCTURE:\n"
+                    "- Incident ID & Timestamp\n"
+                    "- FOD Classification & Sensor Confidence\n"
+                    "- Location Telemetry\n"
+                    "- Mathematical Risk Assessment (Show formula application)\n"
+                    "- Automated Actions Executed\n"
+                    "- Summary Statement"
                 ),
             },
             {"role": "user", "content": prompt},
