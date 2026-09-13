@@ -1,0 +1,4 @@
+# Streamlit Cloud system packages
+# Required by opencv-python-headless for image processing
+libgl1
+libglib2.0-0
